@@ -13,4 +13,4 @@ Bill will finish writing up the project proposal and submit it on Friday
 
 Dane will be working on the Milestone 1 to be submitted on Tuesday May 12 
 
-
+We will be coding in C++
