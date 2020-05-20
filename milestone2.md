@@ -8,9 +8,13 @@
 
 ## **Meeting Notes 5/15**
 •	Find an http and an encoding library to make our lives easier.
+
 •	The communications seem likes it’s more work that any one person can do. With all the API calls 
+
 •	Proof of state (example: “I bet that the next block will have this has”, the whole network is trying to figure out which is the valid block)
+
 •	Trying to figure out what would work best with our model proof of state of proof of work
+
 •	Ben will start working on Consensus and how forks our settled, Connor will start working on validation/ data structure which includes Transaction, Block, and chain. Dane will start working on Communications  on how nodes communicate with each other and look for an HTTP library to make our life easer. And Bill will start working on investment- how do we make it costly to try to fool the app 
 
 
