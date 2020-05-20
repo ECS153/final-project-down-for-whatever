@@ -2,7 +2,7 @@
 
 1)Ben wrote down a bunch a reaserch and divied the poject up into different sections. Connor also did reasearch and stored in on our google drive. Bill and Dane reviewed the reasearch. Dane worked on the write up of Milestone 1 and Bill worked on the video 
 
-2)Ben will start working on Consensus and how forks our settled, Connor will start working on validation/ data structure which includes Transaction, Block, and chain. Dane will start working on Communications  on how nodes communicate with each other and look for an HTTP library to make our life easer. And Bill will start working on investment- how do we make it costly to try to fool the app 
+2)Ben will start working on Consensus and how forks our settled. Connor will start working on validation/ data structure which includes Transaction, Block, and Chain and integrating the openssl library for cryptographic functions. Dane will start working on Communications  on how nodes communicate with each other and look for an HTTP library to make our life easer. And Bill will start working on investment- how do we make it costly to try to fool the app 
 
 3)Nothing at the moment
 
