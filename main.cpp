@@ -1,13 +1,8 @@
 #include <iostream>
-#include "block.h"
-#include "node.h"
-using namespace std;
+#include "chain.h"
 
-namespace DFW {
-
-int main(int argc, char** argv)
-{
-    // load chain from disk
+int main(int argc, char** argv) {
+    Chain blockchain = loadChain();
     // verify chain
     // load peers from disk
     // broadcast that this node is now a peer
@@ -15,6 +10,4 @@ int main(int argc, char** argv)
         // listen for transactions
         // mine current queue of transactions into block
     }
-}
-
 }
