@@ -17,6 +17,9 @@
 
 •	Ben will start working on Consensus and how forks our settled, Connor will start working on validation/ data structure which includes Transaction, Block, and chain. Dane will start working on Communications  on how nodes communicate with each other and look for an HTTP library to make our life easer. And Bill will start working on investment- how do we make it costly to try to fool the app 
 
+## Design Doc
+https://docs.google.com/document/d/137-3oc-g1-z3NCVHhDR7OIW2W_9xG_6QBmONnNjCmyo/edit?usp=sharing
+
 
 ## Video Link
 
