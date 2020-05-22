@@ -29,5 +29,3 @@ int main(int argc, char** argv)
 
     tb_shutdown();
 }
-
-}
