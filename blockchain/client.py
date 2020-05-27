@@ -1,6 +1,7 @@
 import requests
 from envelope import Envelope
 import pickle
+from transaction import Transaction
 
 ADDRESS = "http://127.0.0.1:5000/"
 #NEED to add checks for 200 and i think 500
@@ -27,9 +28,9 @@ def check_in():
 
 #add a block to the blockchain if failed it means that your blockchain wrong and need to update the the correct one
 #not sure if we are passing the whole block chain or just the block
-def add_block(block):
-    pickled_block = pickle.dumps(block)
-    r = requests.post(ADDRESS + "blockchain", data = pickled_block)
+def add_block(blockchain):
+    pickled_blockchain = pickle.dumps(blockchain)
+    r = requests.post(ADDRESS + "blockchain", data = pickled_blockchain)
     response = r.content.decode()
     if(response == "success"):
         return response
@@ -38,6 +39,15 @@ def add_block(block):
         return response
 
 #NEED to ad function for transactions
+def add_transaction(transaction):
+    pickled_transaction = pickle.dumps(transaction)
+    r = requests.post(ADDRESS + "transactions", data = pickled_transaction)
+    response = r.content.decode()
+
+    if(response == "success"):
+        return "success"
+    else:
+        return "failed"
 
 print(get_blockchain())
 print(get_transactions())

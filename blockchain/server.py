@@ -2,6 +2,15 @@ from flask import Flask
 from flask import request
 from envelope import Envelope
 import pickle
+from transaction import Transaction
+
+"""
+TODO:
+NOTE right now the blocks timestamp when created is when it is created not the youngest
+transaction
+TODO: order the list
+ASK the first ever block 
+"""
 
 blockchain = "test"
 transactions =["T1","T2"]
@@ -35,10 +44,26 @@ def get_BlockChain():
 
 @app.route("/transactions", methods=["GET", "POST"])
 def get_Transactions():
+    global blockchain
+    global transactions
     if request.method == 'GET':
         #print(pickle.dump(transactions))
         return pickle.dumps(transactions)
     if request.method == 'POST':
+        new_transaction = request.data
+        new_transaction = pickle.loads(new_transaction)
+        
+        #TODO
+        #I need the youngest time stamp of the most recent block
+        #time_stamp = block_time
+        verified_results = new_transaction.verify(1) #true or false
+
+        if (verified_results):
+            #add transaction to ordered list of transactions
+            #TODO create and sorted list of transactions by timesstamp
+            return "success"
+        else:
+            return "failed"
         #get data
         # verify data
         # return success or fail
