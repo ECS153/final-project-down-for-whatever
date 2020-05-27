@@ -1,4 +1,4 @@
-# **Milestone 2**
+# **Milestone 3**
 
 1)As ag group we switch from C++ to python because of the time limit we have. Ben wrote the transaction class and implemented its verification. Dane wrote the http networking between server and clients using the request, flask, and pickle librarys. Conor was converting his C++ blockchain code to Python and adding more fuctionality. Bill was working on proof of work 
 
