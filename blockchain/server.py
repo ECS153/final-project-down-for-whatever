@@ -12,49 +12,38 @@ app = Flask(__name__)
 def home():
     return "Hello! this is the main page"
 
-@app.route("/Get_BlockChain", methods=["GET"])
+@app.route("/blockchain", methods=["GET","POST"])
 def get_BlockChain():
-    #pickle is going to be used in here need to change later 
-    return pickle.dumps(blockchain)
-
-@app.route("/Set_BlockChain", methods=["POST"])
-def set_BlockChain():
-    #pickle is going to be used in here need to change later 
-    '''
-    new_bc = request.data
-    new_bc = pickle.loads(new_bc)
-    blockchain = new_bc #this block chain is not global???
-    print(blockchain)
-    return 'hi'
-    '''
     global blockchain
     global transactions
-    new_bc = request.data
-    new_bc = pickle.loads(new_bc)
-    if blockchain == None:
-        blockchain = new_bc
-        transactions.clear()#clear transactions?
-        return "success"
-    elif (len(new_bc) > len(blockchain)):
-        blockchain = new_bc
-        transactions.clear()#clear transactions?
-        return "success"
-    else:
-        return "failed"
+    if request.method == 'GET':
+        return pickle.dumps(blockchain)
 
+    if request.method == 'POST':
+        new_bc = request.data
+        new_bc = pickle.loads(new_bc)
+        if blockchain == None:
+            blockchain = new_bc
+            #transactions.clear()# TODO NEED TO REMOVE THE TRANSACTIONS IN THE LIST THAT WERE USED THE CREATE THIS BLOCK
+            return "success"
+        elif (len(new_bc) > len(blockchain)):
+            blockchain = new_bc
+            #transactions.clear()# TODO NEED TO REMOVE THE TRANSACTIONS IN THE LIST THAT WERE USED THE CREATE THIS BLOCK
+            return "success"
+        else:
+            return "failed"
 
-@app.route("/Get_Transactions", methods=["GET"])
+@app.route("/transactions", methods=["GET", "POST"])
 def get_Transactions():
-    #print(pickle.dump(transactions))
-    return pickle.dumps(transactions)
-
-@app.route("/Add_Transactions", methods=["POST"])
-def add_Transactions():
-    #get data
-    # verify data
-    # return success or fail
-    # if fail return current Transactions and ?blockChain? 
-    pass
+    if request.method == 'GET':
+        #print(pickle.dump(transactions))
+        return pickle.dumps(transactions)
+    if request.method == 'POST':
+        #get data
+        # verify data
+        # return success or fail
+        # if fail return current Transactions and ?blockChain? 
+        pass
 
 @app.route("/check_in", methods=["GET"])
 def check_in(): #gives length of current block chain and how many current transactions 
