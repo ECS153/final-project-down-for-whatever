@@ -20,12 +20,15 @@ def get_BlockChain():
 @app.route("/Set_BlockChain", methods=["POST"])
 def set_BlockChain():
     #pickle is going to be used in here need to change later 
+    '''
     new_bc = request.data
     new_bc = pickle.loads(new_bc)
     blockchain = new_bc #this block chain is not global???
     print(blockchain)
     return 'hi'
     '''
+    global blockchain
+    global transactions
     new_bc = request.data
     new_bc = pickle.loads(new_bc)
     if blockchain == None:
@@ -38,7 +41,6 @@ def set_BlockChain():
         return "success"
     else:
         return "failed"
-    '''
 
 
 @app.route("/Get_Transactions", methods=["GET"])

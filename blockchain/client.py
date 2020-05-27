@@ -91,9 +91,12 @@ print(get_blockchain())
 print(get_transactions())
 check_in().e_print()
 
-r = requests.post("http://127.0.0.1:5000/Set_BlockChain", data = pickle.dumps("changed BC"))
-print(r)
-print(r.content.decode())
+print(add_block("first block"))
+print(get_blockchain())
+
+#r = requests.post("http://127.0.0.1:5000/Set_BlockChain", data = pickle.dumps("changed BC"))
+#print(r)
+#print(r.content.decode())
 
 """
 I keep getting "local variable 'blockchain' reference before assignment"
