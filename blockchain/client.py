@@ -38,7 +38,6 @@ def add_block(blockchain):
         #failed to write to blockchain need to get new block and current transactions
         return response
 
-#NEED to ad function for transactions
 def add_transaction(transaction):
     pickled_transaction = pickle.dumps(transaction)
     r = requests.post(ADDRESS + "transactions", data = pickled_transaction)
@@ -49,9 +48,11 @@ def add_transaction(transaction):
     else:
         return "failed"
 
+"""
 print(get_blockchain())
 print(get_transactions())
 check_in().e_print()
 
 print(add_block("first block"))
 print(get_blockchain())
+"""

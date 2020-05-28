@@ -3,17 +3,19 @@ from flask import request
 from envelope import Envelope
 import pickle
 from transaction import Transaction
+from chain import Chain
+from block import Block
+import bisect
 
 """
 TODO:
-NOTE right now the blocks timestamp when created is when it is created not the youngest
-transaction
-TODO: order the list
-ASK the first ever block 
+ADD threads 
+not sure how we handle the origin block ???
+do i need to check if transaction already exists????
 """
 
-blockchain = "test"
-transactions =["T1","T2"]
+blockchain = None
+transactions =[] #sorted oldest to youngest 
 
 app = Flask(__name__)
 
@@ -31,14 +33,23 @@ def get_BlockChain():
     if request.method == 'POST':
         new_bc = request.data
         new_bc = pickle.loads(new_bc)
-        if blockchain == None:
+
+        if blockchain == None: #origin block ???
             blockchain = new_bc
-            #transactions.clear()# TODO NEED TO REMOVE THE TRANSACTIONS IN THE LIST THAT WERE USED THE CREATE THIS BLOCK
             return "success"
-        elif (len(new_bc) > len(blockchain)):
+
+        elif (new_bc.length > blockchain.length):
             blockchain = new_bc
-            #transactions.clear()# TODO NEED TO REMOVE THE TRANSACTIONS IN THE LIST THAT WERE USED THE CREATE THIS BLOCK
+            time_stamp =  blockchain.blockchain[-1].timestamp            
+            for idx, val in enumerate(transactions):
+                if val.timestamped_msg.timestamp >= time_stamp:
+                    continue
+                else:
+                    neg_num = idx - len(transactions) #negative number 
+                    transactions = transactions[neg_num:] #slicing the list in two and keeping the second half 
+                    break
             return "success"
+
         else:
             return "failed"
 
@@ -47,28 +58,28 @@ def get_Transactions():
     global blockchain
     global transactions
     if request.method == 'GET':
-        #print(pickle.dump(transactions))
+
         return pickle.dumps(transactions)
+    
     if request.method == 'POST':
         new_transaction = request.data
         new_transaction = pickle.loads(new_transaction)
         
-        #TODO
-        #I need the youngest time stamp of the most recent block
-        #time_stamp = block_time
-        verified_results = new_transaction.verify(1) #true or false
+        time_stamp = blockchain.blockchain[-1].timestamp
+        verified_results = new_transaction.verify(time_stamp) #true or false
 
         if (verified_results):
-            #add transaction to ordered list of transactions
-            #TODO create and sorted list of transactions by timesstamp
+            if(len(transactions) == 0):
+                transactions.append(new_transaction)
+            else:
+                #insert new_transaction into a sorted list
+                #https://stackoverflow.com/questions/26840413/insert-a-custom-object-in-a-sorted-list
+                transactions.reverse() #low to high
+                bisect.insort_left(transactions, new_transaction) #(IF somthing goes wrong)this suposed to use the def__ls__ in transaction.py and timestamped_message.py if
+                transactions.reverse() #high to low 
             return "success"
         else:
-            return "failed"
-        #get data
-        # verify data
-        # return success or fail
-        # if fail return current Transactions and ?blockChain? 
-        pass
+            return "failed" 
 
 @app.route("/check_in", methods=["GET"])
 def check_in(): #gives length of current block chain and how many current transactions 
