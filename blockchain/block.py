@@ -7,6 +7,7 @@ class Block:
         self.paper = paper # the paper representing data stored in block
         self.previousBlockHash = previousBlockHash # hash of the previous block in the chain
         self.index = index # index of the block in the chain
+        self.proof = 100 # proof of the block (initialized to a number for the Genesis Block)
 
         if blockHash == None: # if no hash is provided for the block, it is generated
             self.blockHash = self.hash()
@@ -30,3 +31,4 @@ class Block:
         print("Hash: ", self.blockHash)
         print("Previous Blocks Hash: ", self.previousBlockHash)
         print("Paper: ", self.paper)
+        print("Proof: ", self.proof)

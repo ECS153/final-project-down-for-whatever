@@ -1,5 +1,6 @@
 import block
 import util
+import hashlib
 
 import json # used for loading and saving json data
 
@@ -22,6 +23,10 @@ class Chain:
         blockToAdd.previousBlockHash = self.blockchain[-1].hash()
 
         blockToAdd.index = self.length # the index will be the new length
+
+        # calculates the proof of the new block using PoW and the prev (last) block in the chain
+        blockToAdd.proof = self.proof_of_work(self.blockchain[-1].proof)
+
         blockToAdd.blockHash = blockToAdd.hash() # update hash of new block
         self.blockchain.append(blockToAdd) # append the block to the blockchain
 
@@ -41,3 +46,16 @@ class Chain:
         jsonFile = open(filePath, 'r') # read file and add to data list
         blockchain = json.load(jsonFile, object_hook = util.dictToObj)
         return blockchain
+
+    def proof_of_work(self, prev_proof): # generates a proof for a block
+        proof = 0
+        while self.hash_proof(proof, prev_proof) is False:
+            proof += 1
+        
+        return proof
+
+    def hash_proof(self, curr, prev):
+        string = str(curr) + str(prev)
+        encoded_string = string.encode('utf-8')
+        hash = hashlib.sha256(encoded_string).hexdigest()
+        return hash[:4] == "0000"
