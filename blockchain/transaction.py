@@ -25,6 +25,9 @@ class Transaction:
         #self.salt = salt
         self.signature = signature
     
+    def __lt__(self, other):
+        return self.timestamped_msg < other.timestamped_msg
+    
     @classmethod
     def create_now_with_keys(pub: rsa.PublicKey, priv: rsa.PrivateKey, body: bytes):
         author = pub
