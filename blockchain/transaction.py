@@ -29,9 +29,8 @@ class Transaction:
         return self.timestamped_msg < other.timestamped_msg
     
     @classmethod
-    def create_now_with_keys(pub: rsa.PublicKey, priv: rsa.PrivateKey, body: bytes):
+    def create_with_keys(pub: rsa.PublicKey, priv: rsa.PrivateKey, body: bytes, timestamp: int):
         author = pub
-        timestamp = time.time_ns()
         timestamped_msg = TimestampedMessage(body, timestamp)
         signature = rsa.sign(timestamped_msg.to_bytes(), priv, Transaction.HASH_METHOD)
         return Transaction(author, timestamped_msg, signature)
