@@ -40,6 +40,7 @@ def get_BlockChain():
 
         elif (new_bc.length > blockchain.length):
             blockchain = new_bc
+            #Now removing transactions that have a timestamp older than the youngest block in the chain
             time_stamp =  blockchain.blockchain[-1].timestamp            
             for idx, val in enumerate(transactions):
                 if val.timestamped_msg.timestamp >= time_stamp:
@@ -74,9 +75,7 @@ def get_Transactions():
             else:
                 #insert new_transaction into a sorted list
                 #https://stackoverflow.com/questions/26840413/insert-a-custom-object-in-a-sorted-list
-                transactions.reverse() #low to high
-                bisect.insort_left(transactions, new_transaction) #(IF somthing goes wrong)this suposed to use the def__ls__ in transaction.py and timestamped_message.py if
-                transactions.reverse() #high to low 
+                bisect.insort_right(transactions, new_transaction) #(IF somthing goes wrong)this suposed to use the def__gt__ in transaction.py and timestamped_message.py if
             return "success"
         else:
             return "failed" 

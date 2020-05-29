@@ -3,8 +3,8 @@ class TimestampedMessage:
         self.message = message
         self.timestamp = timestamp
     
-    def __lt__(self, other):
-        return self.timestamp < other.timestamp
+    def __gt__(self, other):
+        return other.timestamp > self.timestamp
     
     def to_bytes(self):
         result = bytearray(self.message)
