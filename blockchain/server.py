@@ -14,7 +14,7 @@ not sure how we handle the origin block ???
 do i need to check if transaction already exists????
 """
 
-blockchain = None
+blockchain = None ## on start up create origin block with block static methond
 transactions =[] #sorted oldest to youngest 
 
 app = Flask(__name__)
