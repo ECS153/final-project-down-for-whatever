@@ -47,9 +47,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     pubkey = rsa.PublicKey.load_pkcs1(args.pub.read(), args.pubformat)
+    args.pub.close()
     privkey = rsa.PrivateKey.load_pkcs1(args.priv.read(), args.privformat)
+    args.priv.close()
 
     transaction = Transaction.create_with_keys(pubkey, privkey, args.data.read(), time.time_ns())
+    args.data.close()
 
     r = requests.post("http://" + args.database + TRANSACTION_ENDPOINT, transaction)
     if r.status_code == requests.codes.ok:

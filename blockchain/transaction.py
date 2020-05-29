@@ -26,7 +26,9 @@ class Transaction:
         self.signature = signature
     
     def __gt__(self, other):
-        return other.timestamped_msg > self.timestamped_msg
+        if self.timestamped_msg > other.timestamped_msg:
+            return True
+        return self.author > other.author
     
     @classmethod
     def create_with_keys(pub: rsa.PublicKey, priv: rsa.PrivateKey, body: bytes, timestamp: int):

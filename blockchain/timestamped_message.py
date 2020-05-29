@@ -4,7 +4,9 @@ class TimestampedMessage:
         self.timestamp = timestamp
     
     def __gt__(self, other):
-        return other.timestamp > self.timestamp
+        if self.timestamp > other.timestamp:
+            return True
+        return self.message > other.message
     
     def to_bytes(self):
         result = bytearray(self.message)
