@@ -16,3 +16,4 @@
 •	Trying to plan a meeting for tomorow so that everyone that was not intodays meeting can join
 
 [Ben's Design Doc](https://docs.google.com/document/d/1Ftg9jzN7DSOrtMMwSQ1MYNOK_SK0P-cp_i9vGQMnXpQ/edit?usp=sharing)
+[Connor's Design Doc](https://docs.google.com/document/d/1FNiCJugAZcXI5b8ll1FFh8uA7yDqow7JwcQiO6LhqM0/edit?usp=sharing)
