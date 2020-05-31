@@ -25,11 +25,6 @@ class Transaction:
         #self.salt = salt
         self.signature = signature
 
-    def __gt__(self, other):
-        if self.timestamped_msg > other.timestamped_msg:
-            return True
-        return self.author > other.author
-
     @classmethod
     def create_with_keys(pub: rsa.PublicKey, priv: rsa.PrivateKey, body: bytes, timestamp: int):
         author = pub
@@ -54,7 +49,21 @@ class Transaction:
         sha_summer.update(self.timestamped_msg.to_bytes())
         return sha_summer.digest()
 
+    def __gt__(self, other):
+        if isinstance(rightHandSide, Transaction):
+            if self.timestamped_msg == other.timestamped_msg:
+                return self.author > other.author
+            return self.timestamped_msg > other.timestamped_msg:
+        return False
+
     def __lt__(self, other):
-        if self.timestamped_msg < other.timestamped_msg:
-            return True
-        return self.author < other.author
+        if isinstance(rightHandSide, Transaction):
+            if self.timestamped_msg == other.timestamped_msg:
+                return self.author < other.author
+            return self.timestamped_msg < other.timestamped_msg
+        return False
+
+    def __eq__(self, rightHandSide):
+        if isinstance(rightHandSide, Transaction):
+            return self.signature == rightHandSide.signature
+        return False

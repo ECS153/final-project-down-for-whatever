@@ -52,7 +52,7 @@ class Block:
                 print("Verification failed: unverified transaction in block")
                 return False
             for j in (i+1, len(self.transactions)):
-                if self.transactions[i].signature == self.transactions[j].signature:
+                if self.transactions[i] == self.transactions[j]:
                     print("Verification failed: identical transactions in block")
                     return False
             hasher.update(transaction[i].hash)
