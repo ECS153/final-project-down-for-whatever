@@ -27,7 +27,7 @@ class Chain:
 
         # calculates the proof of the new block using PoW and the prev (last) block in the chain.
         # Update either block or chain to take in list of transactions in order to add.
-        # blockToAdd.proof = self.proof_of_work(self.blockchain[-1].proof)
+        blockToAdd.proof = self.proof_of_work(self.blockchain[-1].proof, blockToAdd.transactions)
 
         blockToAdd.blockHash = blockToAdd.hash() # update hash of new block
         self.blockchain.append(blockToAdd) # append the block to the blockchain
