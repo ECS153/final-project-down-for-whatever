@@ -54,10 +54,7 @@ class Transaction:
         sha_summer.update(self.timestamped_msg.to_bytes())
         return sha_summer.digest()
 
-    def __lt__(self):
-        return self.timestamped_msg.timestamp
-
-    def __eq__(self, rightHandSide):
-        if isinstance(rightHandSide, Transaction):
-            return self.signature == rightHandSide.signature
-        return False
+    def __lt__(self, other):
+        if self.timestamped_msg < other.timestamped_msg:
+            return True
+        return self.author < other.author
