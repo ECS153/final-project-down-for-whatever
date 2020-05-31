@@ -1,0 +1,6 @@
+PWD /Users/cbbcbail/Documents/GitHub/final-project-down-for-whatever/blockchain/__pycache__
+INPUT /usr/local/texlive/2017/texmf.cnf
+INPUT /usr/local/texlive/2017/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT block.cpython-37.pyc
+OUTPUT block.cpython-37.log

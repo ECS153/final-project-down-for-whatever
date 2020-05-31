@@ -14,7 +14,7 @@ class Transaction:
     # :param author: an RSA public key
     # :param body: the unencrypted message to post
     # :param salt: the value that makes the unencrypted_hash have enough leading zeros
-    # :param encrypted_hash: all other fields concatenated together, 
+    # :param encrypted_hash: all other fields concatenated together,
     """
     HASH_METHOD = 'SHA-256'
     #leading_zeros_in_valid_hash = 7
@@ -24,19 +24,19 @@ class Transaction:
         self.timestamped_msg = timestamped_msg
         #self.salt = salt
         self.signature = signature
-    
+
     def __gt__(self, other):
         if self.timestamped_msg > other.timestamped_msg:
             return True
         return self.author > other.author
-    
+
     @classmethod
     def create_with_keys(pub: rsa.PublicKey, priv: rsa.PrivateKey, body: bytes, timestamp: int):
         author = pub
         timestamped_msg = TimestampedMessage(body, timestamp)
         signature = rsa.sign(timestamped_msg.to_bytes(), priv, Transaction.HASH_METHOD)
         return Transaction(author, timestamped_msg, signature)
-    
+
     def verify(self, timestamp_of_latest_block: int) -> bool:
         try:
             rsa.verify(self.timestamped_msg.to_bytes(), self.signature, self.author)
@@ -47,9 +47,12 @@ class Transaction:
             timestamp_of_latest_block,
             now
         )
-    
+
     def hash(self):
         sha_summer = hashlib.sha256()
         sha_summer.update(self.author)
         sha_summer.update(self.timestamped_msg.to_bytes())
         return sha_summer.digest()
+
+    def __lt__(self):
+        return self.timestamped_msg.timestamp
