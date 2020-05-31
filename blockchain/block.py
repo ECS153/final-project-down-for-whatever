@@ -58,6 +58,10 @@ class Block:
             hasher.update(transaction[i].hash)
 
         print(hasher.hexdigest)
+        for i in range(0, 3):
+            if str(hasher.hexdigest)[i] != 0:
+                print("Verification failed: PoW hash didn't produce leading 0s")
+                return False
 
         if len(self.transactions) >  MAX_TRANSACTIONS_PER_BLOCK:
             print("Verification failed: too many transactions in block")
