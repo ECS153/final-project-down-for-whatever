@@ -14,8 +14,8 @@ not sure how we handle the origin block ???
 do i need to check if transaction already exists????
 """
 
-blockchain = None ## on start up create origin block with block static methond
-transactions =[] #sorted oldest to youngest 
+blockchain = Chain() ## on start up create origin block with block static methond With @staticmethod of Block class
+transactions =[] #sorted oldest to youngest... oldest has a smaller time stamp 
 
 app = Flask(__name__)
 
@@ -43,8 +43,10 @@ def get_BlockChain():
             #Now removing transactions that have a timestamp older than the youngest block in the chain
             time_stamp =  blockchain.blockchain[-1].timestamp            
             for idx, val in enumerate(transactions):
-                if val.timestamped_msg.timestamp >= time_stamp:
+                if val.timestamped_msg.timestamp <= time_stamp:
                     continue
+                elif (val.timestamped_msg.timestamp == time_stamp) and (idx == len(transactions)-1):
+                    transactions = []
                 else:
                     neg_num = idx - len(transactions) #negative number 
                     transactions = transactions[neg_num:] #slicing the list in two and keeping the second half 
