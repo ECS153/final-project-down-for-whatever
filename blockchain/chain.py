@@ -1,4 +1,5 @@
 import block
+import transaction
 import util
 import hashlib
 
@@ -24,8 +25,9 @@ class Chain:
 
         blockToAdd.index = self.length # the index will be the new length
 
-        # calculates the proof of the new block using PoW and the prev (last) block in the chain
-        blockToAdd.proof = self.proof_of_work(self.blockchain[-1].proof)
+        # calculates the proof of the new block using PoW and the prev (last) block in the chain. 
+        # Update either block or chain to take in list of transactions in order to add.
+        # blockToAdd.proof = self.proof_of_work(self.blockchain[-1].proof)
 
         blockToAdd.blockHash = blockToAdd.hash() # update hash of new block
         self.blockchain.append(blockToAdd) # append the block to the blockchain
@@ -47,15 +49,19 @@ class Chain:
         blockchain = json.load(jsonFile, object_hook = util.dictToObj)
         return blockchain
 
-    def proof_of_work(self, prev_proof): # generates a proof for a block
+    def proof_of_work(self, prev_proof, transactions_to_be_mined): # generates a proof for a block
         proof = 0
-        while self.hash_proof(proof, prev_proof) is False:
+        prev = str(prev_proof)
+        for transaction in transactions_to_be_mined:
+            prev = prev_string + transaction.hash()
+
+        while self.hash_proof(proof, prev) is False:
             proof += 1
         
         return proof
 
     def hash_proof(self, curr, prev):
-        string = str(curr) + str(prev)
+        string = str(curr) + prev
         encoded_string = string.encode('utf-8')
         hash = hashlib.sha256(encoded_string).hexdigest()
         return hash[:4] == "0000"
