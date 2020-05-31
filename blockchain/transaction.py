@@ -56,3 +56,8 @@ class Transaction:
 
     def __lt__(self):
         return self.timestamped_msg.timestamp
+
+    def __eq__(self, rightHandSide):
+        if isinstance(rightHandSide, Transaction):
+            return self.signature == rightHandSide.signature
+        return False

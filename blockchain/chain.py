@@ -25,7 +25,7 @@ class Chain:
 
         blockToAdd.index = self.length # the index will be the new length
 
-        # calculates the proof of the new block using PoW and the prev (last) block in the chain. 
+        # calculates the proof of the new block using PoW and the prev (last) block in the chain.
         # Update either block or chain to take in list of transactions in order to add.
         # blockToAdd.proof = self.proof_of_work(self.blockchain[-1].proof)
 
@@ -57,7 +57,7 @@ class Chain:
 
         while self.hash_proof(proof, prev) is False:
             proof += 1
-        
+
         return proof
 
     def hash_proof(self, curr, prev):
@@ -65,3 +65,18 @@ class Chain:
         encoded_string = string.encode('utf-8')
         hash = hashlib.sha256(encoded_string).hexdigest()
         return hash[:4] == "0000"
+
+    def verify(self):
+        for i in range(0, len(self.blockchain) - 1):
+            if self.blockchain[i + 1].verify(self.blockchain[i].timestamp, self.blockchain[i].proof) == False:
+                return False
+
+        if len(self.blockchain) != self.length:
+            print("Verification failed: mismatched lengths in chain")
+            return False
+
+        if len(self.blockchain[0].transactions) > 0:
+            print("Verification failed: transactions in genesis block")
+            return False
+
+        return True
