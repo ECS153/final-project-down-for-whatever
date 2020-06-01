@@ -49,21 +49,21 @@ class Transaction:
         sha_summer.update(self.timestamped_msg.to_bytes())
         return sha_summer.digest()
 
-    def __gt__(self, other):
-        if isinstance(other, Transaction):
+    def __gt__(self, right_hand_side):
+        if isinstance(right_hand_side, Transaction):
             if self.timestamped_msg == other.timestamped_msg:
                 return self.author > other.author
-            return self.timestamped_msg > other.timestamped_msg
+            return self.timestamped_msg > other.timestamped_msg:
         return False
 
-    def __lt__(self, other):
-        if isinstance(other, Transaction):
+    def __lt__(self, right_hand_side):
+        if isinstance(right_hand_side, Transaction):
             if self.timestamped_msg == other.timestamped_msg:
-                return self.author < other.author
-            return self.timestamped_msg < other.timestamped_msg
+                return self.author < right_hand_side.author
+            return self.timestamped_msg < right_hand_side.timestamped_msg
         return False
 
-    def __eq__(self, rightHandSide):
-        if isinstance(rightHandSide, Transaction):
-            return self.signature == rightHandSide.signature
+    def __eq__(self, right_hand_side):
+        if isinstance(right_hand_side, Transaction):
+            return self.signature == right_hand_side.signature
         return False
