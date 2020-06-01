@@ -53,7 +53,7 @@ class Chain:
         proof = 0
         prev = str(prev_proof)
         for transaction in transactions_to_be_mined:
-            prev = prev_string + transaction.hash()
+            prev = prev_proof + transaction.hash() #you had prev_string i changed it to prev_proof -Dane
 
         while self.hash_proof(proof, prev) is False:
             proof += 1
