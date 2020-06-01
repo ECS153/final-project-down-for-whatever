@@ -12,6 +12,7 @@ MIN_BLOCK_SIZE = 3
 MAX_BLOCK_SIZE = 10
 Block.MIN_BLOCK_SIZE
 
+
 """
 
 ADDRESS = "http://127.0.0.1:5000/"
