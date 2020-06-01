@@ -1,5 +1,5 @@
 import block
-import transaction
+from transaction import Transaction
 import util
 import hashlib
 

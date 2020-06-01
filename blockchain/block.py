@@ -1,6 +1,6 @@
 from datetime import datetime  # for datetime representation of timestamp
 import hashlib                 # for SHA256 cryptographic hashing
-import transaction
+from transaction import Transaction
 
 MAX_TRANSACTIONS_PER_BLOCK=15
 MIN_TRANSACTIONS_PER_BLOCK=3
@@ -55,7 +55,7 @@ class Block:
                 if self.transactions[i] == self.transactions[j]:
                     print("Verification failed: identical transactions in block")
                     return False
-            hasher.update(transaction[i].hash)
+            hasher.update(self.transactions[i].hash)
 
         print(hasher.hexdigest)
         for i in range(0, 3):
