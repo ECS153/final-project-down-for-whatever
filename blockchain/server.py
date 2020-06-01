@@ -34,14 +34,25 @@ def g_p_blockchain():
         new_bc = request.data
         new_bc = pickle.loads(new_bc)
 
-        if blockchain == None: #origin block ???
-            blockchain = new_bc
-            return "success"
-
-        elif (new_bc.length > blockchain.length): # my_list.filter { item -> item.timestamp < some_other_constant }
+        #does blockchain.verify go here?????
+        if (new_bc.length > blockchain.length): # my_list.filter { item -> item.timestamp < some_other_constant }
             blockchain = new_bc
             #Now removing transactions that have a timestamp older than the youngest block in the chain
-            time_stamp =  blockchain.blockchain[-1].timestamp            
+            
+            time_stamp =  blockchain.blockchain[-1].timestamp
+            
+            """
+            trans_temp = []
+            for val in transactions:
+                if val.timestamped_msg.timestamp < time_stamp:
+                    continue
+                elif (val.timestamped_msg.timestamp == time_stamp) and (val.author == blockchain.blockchain[-1].transactions[-1].author):
+                    continue
+                else:
+                    trans_temp.append(val)
+            transactions = trans_temp
+            """                
+
             for idx, val in enumerate(transactions):
                 if val.timestamped_msg.timestamp < time_stamp:
                     continue
@@ -78,6 +89,10 @@ def g_p_transactions():
                 #insert new_transaction into a sorted list
                 #https://stackoverflow.com/questions/26840413/insert-a-custom-object-in-a-sorted-list
                 bisect.insort_right(transactions, new_transaction) #(IF somthing goes wrong)this suposed to use the def__gt__ in transaction.py and timestamped_message.py if
+                #print for check
+                for i in transactions:
+                    print(i.author + " " + i.timestamped_msg.timestamp)
+
             return "success"
         else:
             return "failed" 

@@ -65,13 +65,14 @@ def main():
      client_running = True
      do = 1
      max_loop = 50 
+     sleep_time = 5
      chain = get_blockchain()
      transactions = get_transactions()
 
      while client_running:
         
-        while len(transactions) < 3:
-            time.sleep(5)
+        while len(transactions) < block.MIN_TRANSACTIONS_PER_BLOCK:
+            time.sleep(sleep_time)
             transactions = get_transactions()
         
         proof_of_work_trans = transactions[:block.MAX_TRANSACTIONS_PER_BLOCK]
