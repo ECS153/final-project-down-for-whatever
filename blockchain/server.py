@@ -24,7 +24,7 @@ def home():
     return "Hello! this is the main page"
 
 @app.route("/blockchain", methods=["GET","POST"])
-def blockchain():
+def g_p_blockchain():
     global blockchain
     global transactions
     if request.method == 'GET':
@@ -57,7 +57,7 @@ def blockchain():
             return "failed"
 
 @app.route("/transactions", methods=["GET", "POST"])
-def transactions():
+def g_p_transactions():
     global blockchain
     global transactions
     if request.method == 'GET':
