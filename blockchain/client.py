@@ -81,7 +81,7 @@ def main():
         #this is the mining process
         while True:
             #proof_of_work(self, prev_proof, transactions_to_be_mined)
-            prev_proof = chain.blockchain[-1].proof
+            prev_proof = chain.data[-1].proof
             results = chain.proof_of_work(prev_proof, proof_of_work_trans)
 
             if(results != None):
@@ -91,7 +91,7 @@ def main():
                 #TODO add more init stuff
                 new_block.timestamp = proof_of_work_trans[-1].timestamped_msg.timestamp
                 new_block.transactions = proof_of_work_trans
-                #new_block.previousBlockHash = chain.blockchain[-1].hash()
+                #new_block.previousBlockHash = chain.data[-1].hash()
                 #new_block.index = chain.length + 1
                 
                 new_block.proof = results
