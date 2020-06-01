@@ -51,14 +51,14 @@ class Transaction:
 
     def __gt__(self, right_hand_side):
         if isinstance(right_hand_side, Transaction):
-            if self.timestamped_msg == other.timestamped_msg:
-                return self.author > other.author
-            return self.timestamped_msg > other.timestamped_msg:
+            if self.timestamped_msg == right_hand_side.timestamped_msg:
+                return self.author > right_hand_side.author
+            return self.timestamped_msg > right_hand_side.timestamped_msg
         return False
 
     def __lt__(self, right_hand_side):
         if isinstance(right_hand_side, Transaction):
-            if self.timestamped_msg == other.timestamped_msg:
+            if self.timestamped_msg == right_hand_side.timestamped_msg:
                 return self.author < right_hand_side.author
             return self.timestamped_msg < right_hand_side.timestamped_msg
         return False
