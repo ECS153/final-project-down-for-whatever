@@ -39,29 +39,15 @@ def g_p_blockchain():
             blockchain = new_bc
             #Now removing transactions that have a timestamp older than the youngest block in the chain
             
-            time_stamp =  blockchain.blockchain[-1].timestamp
+            timestamp_of_last_block = blockchain.data[-1].timestamp
             
-            """
+
             trans_temp = []
             for val in transactions:
-                if val.timestamped_msg.timestamp < time_stamp:
-                    continue
-                elif (val.timestamped_msg.timestamp == time_stamp) and (val.author == blockchain.blockchain[-1].transactions[-1].author):
-                    continue
-                else:
+                if val.timestamped_msg.timestamp > timestamp_of_last_block:
                     trans_temp.append(val)
             transactions = trans_temp
-            """                
 
-            for idx, val in enumerate(transactions):
-                if val.timestamped_msg.timestamp < time_stamp:
-                    continue
-                elif (val.timestamped_msg.timestamp == time_stamp) and (idx == len(transactions)-1):
-                    transactions = []
-                else:
-                    neg_num = idx - len(transactions) #negative number 
-                    transactions = transactions[neg_num:] #slicing the list in two and keeping the second half 
-                    break
             return "success"
 
         else:
@@ -79,7 +65,7 @@ def g_p_transactions():
         new_transaction = request.data
         new_transaction = pickle.loads(new_transaction)
         
-        time_stamp = blockchain.blockchain[-1].timestamp
+        time_stamp = blockchain.data[-1].timestamp
         verified_results = new_transaction.verify(time_stamp) #true or false
 
         if (verified_results):
