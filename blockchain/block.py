@@ -14,7 +14,7 @@ class Block:
         self.transactions = transactions # the list of the block's transactions
         self.previousBlockHash = previousBlockHash # previous block's hash
         self.index = index # index of the block in the chain
-        self.proof = proof # proof of block (initially 100 for Genesis Block)
+        self.proof = "proof" # proof of block (initially 100 for Genesis Block)
 
         if blockHash == None: # if no hash is provided, it is auto-generated
             self.blockHash = self.hash()
@@ -48,7 +48,7 @@ class Block:
         hasher.update(previousProof)
 
         for i in range(0, len(self.transactions)):
-            if self.transactions[i].verify(self.timestamp) == False:
+            if self.transactions[i].verify(previousTimestamp) == False: # TODO pass in a previous transaction instead, compare sort order
                 print("Verification failed: unverified transaction in block")
                 return False
             for j in (i+1, len(self.transactions)):
@@ -57,7 +57,7 @@ class Block:
                     return False
             hasher.update(self.transactions[i].hash)
 
-        print(hasher.hexdigest)
+        print(hasher.hexdigest) # FIXME use the verify method in Chain to produce hash - maybe move it here!
         for i in range(0, 3):
             if str(hasher.hexdigest)[i] != 0:
                 print("Verification failed: PoW hash didn't produce leading 0s")

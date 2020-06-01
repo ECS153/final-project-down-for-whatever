@@ -38,12 +38,12 @@ def g_p_blockchain():
             blockchain = new_bc
             return "success"
 
-        elif (new_bc.length > blockchain.length):
+        elif (new_bc.length > blockchain.length): # my_list.filter { item -> item.timestamp < some_other_constant }
             blockchain = new_bc
             #Now removing transactions that have a timestamp older than the youngest block in the chain
             time_stamp =  blockchain.blockchain[-1].timestamp            
             for idx, val in enumerate(transactions):
-                if val.timestamped_msg.timestamp <= time_stamp:
+                if val.timestamped_msg.timestamp < time_stamp:
                     continue
                 elif (val.timestamped_msg.timestamp == time_stamp) and (idx == len(transactions)-1):
                     transactions = []

@@ -2,8 +2,11 @@ import block
 from transaction import Transaction
 import util
 import hashlib
+import random
 
 import json # used for loading and saving json data
+
+ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "0000"
 
 class Chain:
     def __init__(self, length=0, blockchain=[]):
@@ -17,7 +20,7 @@ class Chain:
     def generateGenesisBlock(self): # creates and returns a genesis block
         return block.Block("Genesis Block")
 
-    def add(self, blockToAdd): # adds a new block to the blockchain
+    def add(self, blockToAdd: block.Block): # adds a new block to the blockchain
         self.length += 1 # increment blockchain length variable
 
         # calculate the hash of last block in the chain
@@ -27,7 +30,7 @@ class Chain:
 
         # calculates the proof of the new block using PoW and the prev (last) block in the chain.
         # Update either block or chain to take in list of transactions in order to add.
-        blockToAdd.proof = self.proof_of_work(self.blockchain[-1].proof, blockToAdd.transactions)
+        #blockToAdd.proof = self.proof_of_work(self.blockchain[-1].proof, blockToAdd.transactions)
 
         blockToAdd.blockHash = blockToAdd.hash() # update hash of new block
         self.blockchain.append(blockToAdd) # append the block to the blockchain
@@ -50,21 +53,20 @@ class Chain:
         return blockchain
 
     def proof_of_work(self, prev_proof, transactions_to_be_mined): # generates a proof for a block
-        proof = 0
-        prev = str(prev_proof)
+        data_in_hash = str(prev_proof)
         for transaction in transactions_to_be_mined:
-            prev = prev_proof + transaction.hash() #you had prev_string i changed it to prev_proof -Dane
+            data_in_hash += transaction.hash() #you had prev_string i changed it to prev_proof -Dane
 
-        while self.hash_proof(proof, prev) is False:
-            proof += 1
+        guess_at_this_blocks_proof_number = random.random()
+        if self.hash_proof(guess_at_this_blocks_proof_number, data_in_hash):
+            return guess_at_this_blocks_proof_number
+        return None
 
-        return proof
-
-    def hash_proof(self, curr, prev):
-        string = str(curr) + prev
+    def hash_proof(self, guess, data):
+        string = str(guess) + data
         encoded_string = string.encode('utf-8')
         hash = hashlib.sha256(encoded_string).hexdigest()
-        return hash[:4] == "0000"
+        return hash.startswith(ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK)
 
     def verify(self):
         for i in range(0, len(self.blockchain) - 1):

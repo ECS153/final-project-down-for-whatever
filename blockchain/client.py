@@ -12,7 +12,6 @@ MIN_BLOCK_SIZE = 3
 MAX_BLOCK_SIZE = 10
 Block.MIN_BLOCK_SIZE
 
-
 """
 
 ADDRESS = "http://127.0.0.1:5000/"
@@ -64,7 +63,7 @@ def add_transaction(transaction):
 def main():
      #on start up pull transaction and block
      client_running = True
-     do = 1 #TODO GO TRHOUGH CODE AND MAKE CONSTANT
+     do = 1
      max_loop = 50 
      chain = get_blockchain()
      transactions = get_transactions()
@@ -89,10 +88,13 @@ def main():
                 #timestamp=datetime.now(), blockHash=None, index=0, previousBlockHash=None, proof=100, transactions=[]
                 new_block = Block() #figure out how to call client
                 #TODO add more init stuff
-                new_block.proof = results
-                new_block.transactions = proof_of_work_trans
                 new_block.timestamp = proof_of_work_trans[-1].timestamped_msg.timestamp
-
+                new_block.transactions = proof_of_work_trans
+                #new_block.previousBlockHash = chain.blockchain[-1].hash()
+                #new_block.index = chain.length + 1
+                
+                new_block.proof = results
+                #hash      
                 chain.add(new_block)
                 results = add_block(chain)
                 if(results == "success"):
@@ -109,13 +111,12 @@ def main():
                 break
         
         #do a check in 
-        #TODO CHANGE ENVELOPe to transactions_count and blockchain_len
         check = check_in()
-        if check.blockchain > chain.length():
+        if check.blockchain_len > chain.length():
             chain = get_blockchain()
             transactions = get_transactions()
         #transactions just got updated
-        elif len(transactions) != check.transactions:
+        elif len(transactions) != check.transactions_count:
             transactions = get_transactions()
 
         do = 1 #reset the do while loop
