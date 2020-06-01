@@ -1,6 +1,7 @@
 import requests
 from envelope import Envelope
 import pickle
+import time
 from transaction import Transaction
 
 """
@@ -65,74 +66,56 @@ def main():
      transactions = get_transactions()
 
      while client_running:
+        while len(transactions) < 3:
+            time.sleep(5)
+        if (len(transactions) >= 3) and (len(transactions) <= 15):
+            proof_of_work_trans = transactions
+        else:#transactions are greater than 15
+            proof_of_work_trans = transactions[:15]
+        
         #python does not have a dow hile loop I made my own
+        #this is the mining process
         while True:
-            #working on getting a transaction
-            #or
-            #working on mining 
-            #NOT really sure how it is supose to work
+            #proof_of_work(self, prev_proof, transactions_to_be_mined)
+            prev_proof = chain.blockchain[-1].proof
+            results = chain.proof_of_work(prev_proof, proof_of_work_trans)
+
+            if(results != None):
+                #generate block
+                #timestamp=datetime.now(), blockHash=None, index=0, previousBlockHash=None, proof=100, transactions=[]
+                new_block = Block() #figure out how to call client
+                new_block.proof = results
+                new_block.transactions = proof_of_work_trans
+                new_block.timestamp = proof_of_work_trans[-1].timestamped_msg.timestamp
+
+                chain.add(new_block)
+                results = add_block(chain)
+                if(results == "success"):
+                    do = 51 #break do while loop 
+                    transactions = get_transactions()
+                else:
+                    do = 51 #break do while loop and will go to check_in section to get the new chain and transactions
+
+                #check to see if push was succesful 
+                break
+
             do = do + 1
             if (do > 50):
                 break
+        
         #do a check in 
         check = check_in()
         if check.blockchain > chain.length():
             chain = get_blockchain()
-            #check if any of the transaction i was working on got changed???
             transactions = get_transactions()
         #transactions just got updated
-        else:
-            #check if any of the transaction i was working on got changed???
+        elif len(transactions) != check.transactions:
             transactions = get_transactions()
+        else: 
+            continue
+        do = 1 #reset the do while loop
 
 ###################################################################################################
-
-# temp code
-def working_on_transaction():
-    #doing somthing to gen a transaction
-    
-    #transaction created.... NOw need to write to server
-    t = None #place holder need to change later 
-    results = add_transaction(t)
-
-    if (results == "failed"):
-        #get new list of transactions
-        transactions = get_transactions()
-        #check to see if you can start mining a block?
-    
-    else: #it was a success
-        #do what ever else you need to do 
-        #check to see if you can start mining a block?
-        continue
-
-def working_on_bock():
-    #doing somthing to mine a block
-    #block as been mined
-    
-    chain = None #place holder
-    block = None #place holder
-    chain.add(block)
-
-    results = add_block(chain)
-
-    #to slow there are your chain is out of date
-    if (results == "failed"):
-        chain = get_blockchain()
-        transaction = get_transactions()
-        #now starting mining again 
-        #or
-        #start working on transactions
-    
-    else:#your chain was acepted
-        transaction = get_transactions()
-        #now starting mining again 
-        #or
-        #start working on transactions
-        
-
-
-        
-         
 
 
 
