@@ -42,7 +42,7 @@ class Block:
         self.timestamp = self.transactions[-1].timestamped_msg.timestamp
         self.blockHash = self.hash() # update hash of block
 
-    def verify(previousTimestamp, previousProof):
+    def verify(self, previousTimestamp, previousProof):
         hasher = hashlib.sha256()
         hasher.update(self.proof)
         hasher.update(previousProof)
