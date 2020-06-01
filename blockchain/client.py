@@ -66,8 +66,10 @@ def main():
      transactions = get_transactions()
 
      while client_running:
+        
         while len(transactions) < 3:
             time.sleep(5)
+            transactions = get_transactions()
         if (len(transactions) >= 3) and (len(transactions) <= 15):
             proof_of_work_trans = transactions
         else:#transactions are greater than 15
