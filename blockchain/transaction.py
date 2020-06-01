@@ -50,14 +50,14 @@ class Transaction:
         return sha_summer.digest()
 
     def __gt__(self, other):
-        if isinstance(rightHandSide, Transaction):
+        if isinstance(other, Transaction):
             if self.timestamped_msg == other.timestamped_msg:
                 return self.author > other.author
-            return self.timestamped_msg > other.timestamped_msg:
+            return self.timestamped_msg > other.timestamped_msg
         return False
 
     def __lt__(self, other):
-        if isinstance(rightHandSide, Transaction):
+        if isinstance(other, Transaction):
             if self.timestamped_msg == other.timestamped_msg:
                 return self.author < other.author
             return self.timestamped_msg < other.timestamped_msg

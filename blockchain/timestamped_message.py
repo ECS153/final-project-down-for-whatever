@@ -4,14 +4,21 @@ class TimestampedMessage:
         self.timestamp = timestamp
 
     def __gt__(self, other):
-        if isinstance(rightHandSide, Transaction):
+        if isinstance(other, TimestampedMessage):
             if self.timestamp == other.timestamp:
                 return self.message > other.message
             return self.timestamp > other.timestamp
         return False
+    
+    def __lt__(self, right_hand_side):
+        if not isinstance(right_hand_side, TimestampedMessage):
+            return False
+        if self.timestamp != right_hand_side.timestamp:
+            return self.timestamp < right_hand_side.timestamp
+        return self.message < right_hand_side.message
 
     def __eq__(self, other):
-        if isinstance(rightHandSide, Transaction):
+        if isinstance(other, TimestampedMessage):
             return self.timestamp == other.timestamp
         return False
 
