@@ -3,6 +3,8 @@ from envelope import Envelope
 import pickle
 import time
 from transaction import Transaction
+from block import Block
+import block
 
 """
 TODO
@@ -61,7 +63,8 @@ def add_transaction(transaction):
 def main():
      #on start up pull transaction and block
      client_running = True
-     do = 1
+     do = 1 #TODO GO TRHOUGH CODE AND MAKE CONSTANT
+     max_loop = 50 
      chain = get_blockchain()
      transactions = get_transactions()
 
@@ -70,10 +73,8 @@ def main():
         while len(transactions) < 3:
             time.sleep(5)
             transactions = get_transactions()
-        if (len(transactions) >= 3) and (len(transactions) <= 15):
-            proof_of_work_trans = transactions
-        else:#transactions are greater than 15
-            proof_of_work_trans = transactions[:15]
+        
+        proof_of_work_trans = transactions[:block.MAX_TRANSACTIONS_PER_BLOCK]
         
         #python does not have a dow hile loop I made my own
         #this is the mining process
@@ -86,6 +87,7 @@ def main():
                 #generate block
                 #timestamp=datetime.now(), blockHash=None, index=0, previousBlockHash=None, proof=100, transactions=[]
                 new_block = Block() #figure out how to call client
+                #TODO add more init stuff
                 new_block.proof = results
                 new_block.transactions = proof_of_work_trans
                 new_block.timestamp = proof_of_work_trans[-1].timestamped_msg.timestamp
@@ -93,19 +95,20 @@ def main():
                 chain.add(new_block)
                 results = add_block(chain)
                 if(results == "success"):
-                    do = 51 #break do while loop 
+                    do = max_loop + 1 #break do while loop 
                     transactions = get_transactions()
                 else:
-                    do = 51 #break do while loop and will go to check_in section to get the new chain and transactions
+                    do = max_loop + 1 #break do while loop and will go to check_in section to get the new chain and transactions
 
                 #check to see if push was succesful 
                 break
 
             do = do + 1
-            if (do > 50):
+            if (do > max_loop):
                 break
         
         #do a check in 
+        #TODO CHANGE ENVELOPe to transactions_count and blockchain_len
         check = check_in()
         if check.blockchain > chain.length():
             chain = get_blockchain()
@@ -113,12 +116,10 @@ def main():
         #transactions just got updated
         elif len(transactions) != check.transactions:
             transactions = get_transactions()
-        else: 
-            continue
+
         do = 1 #reset the do while loop
 
 ###################################################################################################
-
 
 
 """
