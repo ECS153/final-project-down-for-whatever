@@ -25,7 +25,7 @@ class Transaction:
         #self.salt = salt
         self.signature = signature
 
-    @classmethod
+    @staticmethod
     def create_with_keys(pub: rsa.PublicKey, priv: rsa.PrivateKey, body: bytes, timestamp: int):
         author = pub
         timestamped_msg = TimestampedMessage(body, timestamp)
@@ -36,16 +36,21 @@ class Transaction:
         try:
             rsa.verify(self.timestamped_msg.to_bytes(), self.signature, self.author)
         except rsa.VerificationError:
+            print("Signature invalid!")
             return False
         now = time.time_ns()
-        return self.timestamped_msg.timestamp_in_left_open_interval(
+        timestamp_is_ok = self.timestamped_msg.timestamp_in_left_open_interval(
             timestamp_of_latest_block,
             now
         )
+        if not timestamp_is_ok:
+            print("Timestamp is bad!")
+        return timestamp_is_ok
 
     def hash(self):
         sha_summer = hashlib.sha256()
-        sha_summer.update(self.author)
+        sha_summer.update(str(self.author.n).encode("utf-8"))
+        sha_summer.update(str(self.author.e).encode("utf-8"))
         sha_summer.update(self.timestamped_msg.to_bytes())
         return sha_summer.digest()
 

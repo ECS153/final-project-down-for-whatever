@@ -1,7 +1,7 @@
 class TimestampedMessage:
     def __init__(self, message: bytes, timestamp: int):
         self.message = message
-        self.timestamp = timestamp
+        self.timestamp: int = timestamp
 
     def __gt__(self, other):
         if isinstance(other, TimestampedMessage):
@@ -24,8 +24,12 @@ class TimestampedMessage:
 
     def to_bytes(self):
         result = bytearray(self.message)
-        result.append(self.timestamp)
+        result.extend(str(self.timestamp).encode())
         return bytes(result)
 
     def timestamp_in_left_open_interval(self, lower_bound, upper_bound):
+        gt_lower_bound = self.timestamp > lower_bound
+        lt_eq_upper_bound = upper_bound >= self.timestamp
+        if not (gt_lower_bound or lt_eq_upper_bound):
+            print(f"lower: {lower_bound}, timestamp: {self.timestamp}, upper: {upper_bound}")
         return self.timestamp > lower_bound and upper_bound >= self.timestamp

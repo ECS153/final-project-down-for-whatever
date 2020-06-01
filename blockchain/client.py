@@ -64,7 +64,7 @@ def main():
      #on start up pull transaction and block
      client_running = True
      do = 1
-     max_loop = 50 
+     max_loop = 50000 
      sleep_time = 5
      chain = get_blockchain()
      transactions = get_transactions()
@@ -113,18 +113,21 @@ def main():
         
         #do a check in 
         check = check_in()
-        if check.blockchain_len > chain.length():
+        if check.blockchain_len > chain.length:
+            print(f"I am getting a new blockchain. Mine was length {chain.length}.")
             chain = get_blockchain()
+            print(f"My new blockchain is of length {chain.length}")
             transactions = get_transactions()
         #transactions just got updated
         elif len(transactions) != check.transactions_count:
+            print(f"There are {check.transactions_count} transactions, and I only have {len(transactions)} of them. I am getting the rest.")
             transactions = get_transactions()
 
         do = 1 #reset the do while loop
 
 ###################################################################################################
 
-
+main()
 """
 print(get_blockchain())
 print(get_transactions())

@@ -66,18 +66,15 @@ def g_p_transactions():
         new_transaction = pickle.loads(new_transaction)
         
         time_stamp = blockchain.data[-1].timestamp
-        verified_results = new_transaction.verify(time_stamp) #true or false
+        transaction_is_valid = new_transaction.verify(time_stamp) #true or false
 
-        if (verified_results):
-            if(len(transactions) == 0):
-                transactions.append(new_transaction)
-            else:
-                #insert new_transaction into a sorted list
-                #https://stackoverflow.com/questions/26840413/insert-a-custom-object-in-a-sorted-list
-                bisect.insort_right(transactions, new_transaction) #(IF somthing goes wrong)this suposed to use the def__gt__ in transaction.py and timestamped_message.py if
-                #print for check
-                for i in transactions:
-                    print(i.author + " " + i.timestamped_msg.timestamp)
+        if transaction_is_valid:
+            #insert new_transaction into a sorted list
+            #https://stackoverflow.com/questions/26840413/insert-a-custom-object-in-a-sorted-list
+            bisect.insort_right(transactions, new_transaction) #(IF somthing goes wrong)this suposed to use the def__gt__ in transaction.py and timestamped_message.py if
+            #print for check
+            for i in transactions:
+                print(str(i.author.n)[-10:] + " " + str(i.timestamped_msg.timestamp))
 
             return "success"
         else:
@@ -85,7 +82,7 @@ def g_p_transactions():
 
 @app.route("/check_in", methods=["GET"])
 def check_in(): #gives length of current block chain and how many current transactions 
-    envelope = Envelope(len(blockchain), len(transactions))
+    envelope = Envelope(blockchain.length, len(transactions))
     return pickle.dumps(envelope)
 
 if __name__ == "__main__":

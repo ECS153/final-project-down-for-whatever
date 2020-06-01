@@ -1,4 +1,5 @@
-from datetime import datetime  # for datetime representation of timestamp
+#from datetime import datetime  # for datetime representation of timestamp
+import time
 import hashlib                 # for SHA256 cryptographic hashing
 from transaction import Transaction
 
@@ -6,7 +7,7 @@ MAX_TRANSACTIONS_PER_BLOCK=15
 MIN_TRANSACTIONS_PER_BLOCK=3
 
 class Block:
-    def __init__(self, timestamp=datetime.now(), blockHash=None, index=0, previousBlockHash=None, proof=100, transactions=[]):
+    def __init__(self, timestamp=time.time_ns(), blockHash=None, index=0, previousBlockHash=None, proof=100, transactions=[]):
 
         # initially when block is created, updates to latest transaction time
         self.timestamp = timestamp

@@ -4,6 +4,7 @@ import argparse
 import requests
 import time
 from transaction import Transaction
+import pickle
 
 rsa_key_format_choices = ['PEM', 'DER']
 TRANSACTION_ENDPOINT = "/transactions"
@@ -14,7 +15,7 @@ if __name__ == "__main__":
         "--pub",
         required=True,
         help="RSA public key filename",
-        type=argparse.FileType('r')
+        type=argparse.FileType('rb')
     )
     parser.add_argument(
         "--pubformat",
@@ -26,7 +27,7 @@ if __name__ == "__main__":
         "--priv",
         required=True,
         help="RSA private key filename",
-        type=argparse.FileType('r')
+        type=argparse.FileType('rb')
     )
     parser.add_argument(
         "--privformat",
@@ -42,23 +43,28 @@ if __name__ == "__main__":
     parser.add_argument(
         "--data",
         help="The file to publish as this transaction's body",
-        type=argparse.FileType('r')
+        type=argparse.FileType('rb')
     )
     args = parser.parse_args()
 
-    pubkey = rsa.PublicKey.load_pkcs1(args.pub.read(), args.pubformat)
+    pubkey = rsa.PublicKey.load_pkcs1_openssl_pem(args.pub.read())
     args.pub.close()
-    privkey = rsa.PrivateKey.load_pkcs1(args.priv.read(), args.privformat)
+    privkey = rsa.PrivateKey.load_pkcs1(args.priv.read(), 'PEM')
     args.priv.close()
 
+    #pub_and_priv = rsa.key.newkeys(2048)
+    #pubkey = pub_and_priv[0]
+    #privkey = pub_and_priv[1]
+
+    #args.data.read()
     transaction = Transaction.create_with_keys(pubkey, privkey, args.data.read(), time.time_ns())
     args.data.close()
 
-    r = requests.post("http://" + args.database + TRANSACTION_ENDPOINT, transaction)
+    r = requests.post("http://" + args.database + TRANSACTION_ENDPOINT, pickle.dumps(transaction))
     if r.status_code == requests.codes.ok:
         print("Published!")
     else:
-        print("Error: " + r.status_code)
+        print("Error: " + str(r.status_code))
         print("The database's response is:")
         print(r.text)
 
