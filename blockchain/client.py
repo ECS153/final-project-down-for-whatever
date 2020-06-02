@@ -108,7 +108,7 @@ def main():
                     print(f"now the number of my transactions is going to go down from {len(transactions)} to {check_in().transactions_count}")
                     transactions = get_transactions()
                 else:
-                    print("I just failly to mine a block")
+                    print("I generated a block but failled to push it to the server")
                     print("i must now update my current blockchain and transactions")
                     do = max_loop + 1 #break do while loop and will go to check_in section to get the new chain and transactions
 
