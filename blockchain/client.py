@@ -64,7 +64,7 @@ def main():
      #on start up pull transaction and block
      client_running = True
      do = 1
-     max_loop = 100000 
+     max_loop = 200000 
      sleep_time = 5
      chain = get_blockchain()
      transactions = get_transactions()
@@ -100,6 +100,7 @@ def main():
                 chain.add(new_block)
                 results = add_block(chain)
                 if(results == "success"):
+                    print(f"I just mined a block with id {str(new_block.hash())[-10:]}")
                     do = max_loop + 1 #break do while loop 
                     transactions = get_transactions()
                 else:

@@ -3,9 +3,9 @@ import time
 import hashlib                 # for SHA256 cryptographic hashing
 from transaction import Transaction
 
-MAX_TRANSACTIONS_PER_BLOCK=15
+MAX_TRANSACTIONS_PER_BLOCK=10
 MIN_TRANSACTIONS_PER_BLOCK=3
-ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "000000"
+ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "00000"
 
 class Block:
     def __init__(self, timestamp=time.time_ns(), blockHash=None, index=0, previousBlockHash=None, proof=100, transactions=[]):
