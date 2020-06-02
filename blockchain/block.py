@@ -2,6 +2,7 @@
 import time
 import hashlib                 # for SHA256 cryptographic hashing
 from transaction import Transaction
+import random 
 
 MAX_TRANSACTIONS_PER_BLOCK=10
 MIN_TRANSACTIONS_PER_BLOCK=3
