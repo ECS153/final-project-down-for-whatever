@@ -9,7 +9,12 @@ reperesent different authors posting transactions you need at least 3 to start t
 
 "python publish.py --pub public2.pem --priv key2.pem --data message.txt"
 
+These lines can be call in just one terminal
+
 Step 3) Clients: each termerninal you open for clients is an additional miner the line is "python client.py"
+
+Step 4) While Client is running you can keep adding transactions to the server else the client will mine all transactions and then just
+keep sleeping until more transactions com in
 
 ## Changing the speed
 
