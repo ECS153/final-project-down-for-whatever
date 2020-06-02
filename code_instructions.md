@@ -4,7 +4,9 @@ Step 1) Start Server: in a terminal enter this line "python server.py"
 
 Step 2) Adding transactions: in a seperate terminal eather the following two line or use both to add one transaction. the differnet lines
 reperesent different authors posting transactions you need at least 3 to start the mining process
+
 "python publish.py --pub public.pem --priv key.pem --data message.txt"
+
 "python publish.py --pub public2.pem --priv key2.pem --data message.txt"
 
 Step 3) Clients: each termerninal you open for clients is an additional miner the line is "python client.py"
