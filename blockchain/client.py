@@ -66,6 +66,9 @@ def main():
      do = 1
      max_loop = 200000 
      sleep_time = 5
+     print("Hello this is the miner starting up")
+     print("i am going to get the blockchain and transactions from the server")
+
      chain = get_blockchain()
      transactions = get_transactions()
 
@@ -100,10 +103,13 @@ def main():
                 chain.add(new_block)
                 results = add_block(chain)
                 if(results == "success"):
-                    print(f"I just mined a block with id {str(new_block.hash())[-10:]}")
+                    print(f"I just successfully mined a block with id {str(new_block.hash())[-10:]}")
                     do = max_loop + 1 #break do while loop 
+                    print(f"now the number of my transactions is going to go down from {len(transactions)} to {check_in().transactions_count}")
                     transactions = get_transactions()
                 else:
+                    print("I just failly to mine a block")
+                    print("i must now update my current blockchain and transactions")
                     do = max_loop + 1 #break do while loop and will go to check_in section to get the new chain and transactions
 
                 #check to see if push was succesful 
@@ -114,6 +120,7 @@ def main():
                 break
         
         #do a check in 
+        print("doing a check in!")
         check = check_in()
         if check.blockchain_len > chain.length:
             print(f"I am getting a new blockchain. Mine was length {chain.length}.")
