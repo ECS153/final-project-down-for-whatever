@@ -49,7 +49,7 @@ class Block:
         hasher.update(previousProof)
 
         for i in range(0, len(self.transactions)):
-            if self.transactions[i].verify(previousTimestamp) == False: # TODO pass in a previous transaction instead, compare sort order
+            if self.transactions[i].verify(previousTimestamp) == False:
                 print("Verification failed: unverified transaction in block")
                 return False
             for j in (i+1, len(self.transactions)):
@@ -58,7 +58,7 @@ class Block:
                     return False
             hasher.update(self.transactions[i].hash)
 
-        print(hasher.hexdigest) # FIXME use the verify method in Chain to produce hash - maybe move it here!
+        print(hasher.hexdigest) # FIXME use the Chain.verify_proof method to produce hash - maybe move it here!
         for i in range(0, 3):
             if str(hasher.hexdigest)[i] != 0:
                 print("Verification failed: PoW hash didn't produce leading 0s")

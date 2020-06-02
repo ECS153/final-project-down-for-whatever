@@ -6,7 +6,7 @@ import time
 from transaction import Transaction
 import pickle
 
-rsa_key_format_choices = ['PEM', 'DER']
+#rsa_key_format_choices = ['PEM', 'DER']
 TRANSACTION_ENDPOINT = "/transactions"
 
 if __name__ == "__main__":
@@ -14,27 +14,27 @@ if __name__ == "__main__":
     parser.add_argument(
         "--pub",
         required=True,
-        help="RSA public key filename",
+        help="RSA public key (in PEM format) filename",
         type=argparse.FileType('rb')
     )
-    parser.add_argument(
-        "--pubformat",
-        default=rsa_key_format_choices[0],
-        choices=rsa_key_format_choices,
-        help="RSA public keyfile encoding"
-    )
+    #parser.add_argument(
+    #    "--pubformat",
+    #    default=rsa_key_format_choices[0],
+    #    choices=rsa_key_format_choices,
+    #    help="RSA public keyfile encoding"
+    #)
     parser.add_argument(
         "--priv",
         required=True,
-        help="RSA private key filename",
+        help="RSA private key (in PEM format) filename",
         type=argparse.FileType('rb')
     )
-    parser.add_argument(
-        "--privformat",
-        default=rsa_key_format_choices[0],
-        choices=rsa_key_format_choices,
-        help="RSA private keyfile encoding"
-    )
+    #parser.add_argument(
+    #    "--privformat",
+    #    default=rsa_key_format_choices[0],
+    #    choices=rsa_key_format_choices,
+    #    help="RSA private keyfile encoding"
+    #)
     parser.add_argument(
         "--database",
         default="127.0.0.1:5000", # default to a Flask server on this machine
