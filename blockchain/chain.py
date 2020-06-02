@@ -6,7 +6,6 @@ import random
 
 import json # used for loading and saving json data
 
-ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "000000"
 TIMESTAMP_FOR_GENESIS_BLOCK: int = 0
 
 class Chain:
@@ -52,27 +51,6 @@ class Chain:
         jsonFile = open(filePath, 'r') # read file and add to data list
         blockchain = json.load(jsonFile, object_hook = util.dictToObj)
         return blockchain
-
-    def proof_of_work(self, prev_proof, transactions_to_be_mined): # generates a proof for a block
-        data_in_hash = bytearray(str(prev_proof).encode())
-        for transaction in transactions_to_be_mined:
-            data_in_hash.extend(transaction.hash()) #you had prev_string i changed it to prev_proof -Dane
-
-        guess_at_this_blocks_proof_number = random.random()
-        if self.hash_proof(guess_at_this_blocks_proof_number, data_in_hash):
-            #print(guess_at_this_blocks_proof_number)
-            return guess_at_this_blocks_proof_number
-        return None
-
-    def hash_proof(self, guess, data: bytearray):
-        f = bytearray(data)
-        f.extend(str(guess).encode())
-        data_with_guess = f
-        #encoded_string = string.encode('utf-8')
-        #print("Total data to hash: " + str(data_with_guess))
-        hash = hashlib.sha256(str(data_with_guess).encode()).hexdigest()
-        #print(hash)
-        return hash.startswith(ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK)
 
     def verify(self):
         for i in range(0, len(self.data) - 1):

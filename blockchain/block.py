@@ -5,6 +5,7 @@ from transaction import Transaction
 
 MAX_TRANSACTIONS_PER_BLOCK=15
 MIN_TRANSACTIONS_PER_BLOCK=3
+ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "000000"
 
 class Block:
     def __init__(self, timestamp=time.time_ns(), blockHash=None, index=0, previousBlockHash=None, proof=100, transactions=[]):
@@ -30,6 +31,7 @@ class Block:
         hasher.update(str(self.index).encode('utf-8'))
         hasher.update(str(self.previousBlockHash).encode('utf-8'))
 
+        # include each transaction hash in block hash
         for transaction in self.transactions:
             hasher.update(transaction.hash())
 
@@ -43,27 +45,28 @@ class Block:
         self.timestamp = self.transactions[-1].timestamped_msg.timestamp
         self.blockHash = self.hash() # update hash of block
 
-    def verify(self, previousTimestamp, previousProof): #i added self - Dane 
-        hasher = hashlib.sha256()
-        hasher.update(self.proof)
-        hasher.update(previousProof)
+    def verify(self, previousTimestamp, previousProof):
+        # start data for use in proof of work verification using previousProof
+        data = bytearray(str(previousProof).encode())
 
-        for i in range(0, len(self.transactions)):
+        for i in range(0, len(self.transactions)): # loop through transactions
+            # verify each transaction in the block
             if self.transactions[i].verify(previousTimestamp) == False:
                 print("Verification failed: unverified transaction in block")
                 return False
+            # ensure each transaction != to any other transaction in the block
             for j in (i+1, len(self.transactions)):
                 if self.transactions[i] == self.transactions[j]:
                     print("Verification failed: identical transactions in block")
                     return False
-            hasher.update(self.transactions[i].hash)
+            # add each transaction to data for use in proof of work verification
+            data.extend(self.transactions[i].hash())
 
-        print(hasher.hexdigest) # FIXME use the Chain.verify_proof method to produce hash - maybe move it here!
-        for i in range(0, 3):
-            if str(hasher.hexdigest)[i] != 0:
-                print("Verification failed: PoW hash didn't produce leading 0s")
-                return False
+        if not self.hash_proof(self.proof, data): # verify proof of work
+            print("Verification failed: PoW hash didn't produce leading 0s")
+            return False
 
+        # verify number of transactions in block is satisfactory
         if len(self.transactions) >  MAX_TRANSACTIONS_PER_BLOCK:
             print("Verification failed: too many transactions in block")
             return False
@@ -84,3 +87,24 @@ class Block:
             print(transaction.author)
             print(transaction.timestamped_msg)
             print(transaction.signature)
+
+    def proof_of_work(self, prev_proof, transactions_to_be_mined): # generates a proof for a block
+        data_in_hash = bytearray(str(prev_proof).encode())
+        for transaction in transactions_to_be_mined:
+            data_in_hash.extend(transaction.hash())
+
+        guess_at_this_blocks_proof_number = random.random()
+        if self.hash_proof(guess_at_this_blocks_proof_number, data_in_hash):
+            #print(guess_at_this_blocks_proof_number)
+            return guess_at_this_blocks_proof_number
+        return None
+
+    def hash_proof(self, guess, data: bytearray):
+        f = bytearray(data)
+        f.extend(str(guess).encode())
+        data_with_guess = f
+        #encoded_string = string.encode('utf-8')
+        #print("Total data to hash: " + str(data_with_guess))
+        hash = hashlib.sha256(str(data_with_guess).encode()).hexdigest()
+        #print(hash)
+        return hash.startswith(ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK)
