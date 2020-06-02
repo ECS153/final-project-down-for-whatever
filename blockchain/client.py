@@ -64,7 +64,7 @@ def main():
      #on start up pull transaction and block
      client_running = True
      do = 1
-     max_loop = 50000 
+     max_loop = 100000 
      sleep_time = 5
      chain = get_blockchain()
      transactions = get_transactions()
@@ -72,6 +72,7 @@ def main():
      while client_running:
         
         while len(transactions) < block.MIN_TRANSACTIONS_PER_BLOCK:
+            print(f"Waiting for more Xacts. Sleeping for {sleep_time} sec.")
             time.sleep(sleep_time)
             transactions = get_transactions()
         

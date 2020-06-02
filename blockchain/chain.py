@@ -6,7 +6,7 @@ import random
 
 import json # used for loading and saving json data
 
-ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "0000"
+ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "000000"
 TIMESTAMP_FOR_GENESIS_BLOCK: int = 0
 
 class Chain:
@@ -60,16 +60,18 @@ class Chain:
 
         guess_at_this_blocks_proof_number = random.random()
         if self.hash_proof(guess_at_this_blocks_proof_number, data_in_hash):
-            print(guess_at_this_blocks_proof_number)
+            #print(guess_at_this_blocks_proof_number)
             return guess_at_this_blocks_proof_number
         return None
 
     def hash_proof(self, guess, data: bytearray):
-        data_with_guess = data.copy().extend(str(guess).encode())
+        f = bytearray(data)
+        f.extend(str(guess).encode())
+        data_with_guess = f
         #encoded_string = string.encode('utf-8')
-        print("Total data to hash: " + str(data_with_guess))
+        #print("Total data to hash: " + str(data_with_guess))
         hash = hashlib.sha256(str(data_with_guess).encode()).hexdigest()
-        print(hash)
+        #print(hash)
         return hash.startswith(ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK)
 
     def verify(self):
