@@ -83,7 +83,7 @@ def main():
         while True:
             #proof_of_work(self, prev_proof, transactions_to_be_mined)
             prev_proof = chain.data[-1].proof
-            results = chain.proof_of_work(prev_proof, proof_of_work_trans)
+            results = chain.data[-1].proof_of_work(prev_proof, proof_of_work_trans)
 
             if(results != None):
                 #generate block
