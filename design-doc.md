@@ -2,4 +2,4 @@
 
 [Dane's Design Doc](https://docs.google.com/document/d/137-3oc-g1-z3NCVHhDR7OIW2W_9xG_6QBmONnNjCmyo/edit?usp=sharing)
 
-[Connor's Design Doc](https://docs.google.com/document/d/1FNiCJugAZcXI5b8ll1FFh8uA7yDqow7JwcQiO6LhqM0/edit?usp=sharing)
+[Connor's Design Doc](https://docs.google.com/document/d/1FNiCJugAZcXI5b8ll1FFh8uA7yDqow7JwcQiO6LhqM0/edit?usp=sharing) - Block and Chain classes which form the basis for our blockchain design. The chain stores a list of blocks, chronologically verified by their hash of the previous block, and verifiable by their proof of work variable.
