@@ -29,7 +29,12 @@ class TimestampedMessage:
 
     def timestamp_in_left_open_interval(self, lower_bound, upper_bound):
         gt_lower_bound = self.timestamp > lower_bound
-        lt_eq_upper_bound = upper_bound >= self.timestamp
-        if not (gt_lower_bound or lt_eq_upper_bound):
-            print(f"lower: {lower_bound}, timestamp: {self.timestamp}, upper: {upper_bound}")
-        return self.timestamp > lower_bound and upper_bound >= self.timestamp
+        lt_eq_upper_bound = self.timestamp <= upper_bound
+        
+        if gt_lower_bound and lt_eq_upper_bound:
+            return True
+        print(f"Timestamp outside of specified interval. \
+                lower_bound: {lower_bound}, \
+                timestamp: {self.timestamp}, \
+                upper_bound: {upper_bound}")
+        return False
