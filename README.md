@@ -26,12 +26,6 @@ you are changing is ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK. with 4 zeros 1 miner is ab
 
 ## Mapping Concepts to Code
 
-* block.py defines an object class representing the blocks in the blockchain. It defines the creation, hashing, and verification of blocks. You can also ass transactions to blocks using block.addTransaction(), print blocks for debugging using block.print(), generate a proof of work for a block using block.proof_of_work(), and hash a proof for a block using block.hash_proof().
-
-* chain.py defines an a object class representing the actual chain of blocks that defines the blockchain. It defines creation, saving, loading, printing, and verification of the blockchain. You can also generate a genesis block, or the first block of a chain using chain.generateGenesisBlock(), and add blocks to the chain using chain.add().
-
-## General Structure of the Code
-
 The `Chain` consists of a Python list of `Block`s.
 
 A `Block` contains a Python list of `Transaction`s.
