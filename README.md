@@ -32,4 +32,12 @@ you are changing is ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK. with 4 zeros 1 miner is ab
 
 ## General Structure of the Code
 
-The Chain consists of a python list of Blocks. Blocks contain a python list of Transactions. Transactions contain timestamped_msgs and their author. The network is composed of servers and clients. 
+The `Chain` consists of a Python list of `Block`s.
+
+A `Block` contains a Python list of `Transaction`s.
+
+A `Transaction` contains one `TimestampedMessage` which forms the content/"body" of the `Transaction`.
+
+The network is composed of one `Server`, which stores the authoritative version of the `Chain`, and zero or more `Client`s mining `Transaction`s into `Block`s.
+
+A single `Transaction` can be submitted to the `Server` by running the publish.py script. The `Server` then passes the new `Transaction` to all clients.
