@@ -54,16 +54,20 @@ class Chain:
         return blockchain
 
     def verify(self):
+        print("Verifying the chain.")
         for i in range(0, len(self.data) - 1):
             if self.data[i + 1].verify(self.data[i].timestamp, self.data[i].proof) == False:
                 return False
+        print("All blocks verified.")
 
         if len(self.data) != self.length:
             print("Verification failed: mismatched lengths in chain")
             return False
+        print("Length verified.")
 
         if len(self.data[0].transactions) > 0:
             print("Verification failed: transactions in genesis block")
             return False
+        print("Genesis block (block 1) verified.")
 
         return True

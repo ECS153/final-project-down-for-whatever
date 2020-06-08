@@ -49,6 +49,7 @@ class Block:
     def verify(self, previousTimestamp, previousProof):
         # start data for use in proof of work verification using previousProof
         data = bytearray(str(previousProof).encode())
+        print("Verifying block ", self.index)
 
         for i in range(0, len(self.transactions)): # loop through transactions
             # verify each transaction in the block
@@ -62,7 +63,6 @@ class Block:
                     return False
             elif i != len(self.transactions) - 1:
                 for j in (i+1, len(self.transactions) - 1):
-                    print(i, ", ", (i+1, len(self.transactions) - 1))
                     if self.transactions[i] == self.transactions[j]:
                         print("Verification failed: identical transactions in block")
                         return False
