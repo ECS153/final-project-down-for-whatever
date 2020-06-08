@@ -31,3 +31,5 @@ you are changing is ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK. with 4 zeros 1 miner is ab
 * chain.py defines an a object class representing the actual chain of blocks that defines the blockchain. It defines creation, saving, loading, printing, and verification of the blockchain. You can also generate a genesis block, or the first block of a chain using chain.generateGenesisBlock(), and add blocks to the chain using chain.add().
 
 ## General Structure of the Code
+
+The Chain consists of a python list of Blocks. Blocks contain a python list of Transactions. Transactions contain timestamped_msgs and their author. The network is composed of servers and clients. 
