@@ -18,6 +18,7 @@ class Chain:
             self.data = [genesisBlock]
 
     def generateGenesisBlock(self): # creates and returns a genesis block
+        self.length += 1
         return block.Block(TIMESTAMP_FOR_GENESIS_BLOCK)
 
     def add(self, blockToAdd: block.Block): # adds a new block to the blockchain

@@ -2,7 +2,7 @@
 import time
 import hashlib                 # for SHA256 cryptographic hashing
 from transaction import Transaction
-import random 
+import random
 
 MAX_TRANSACTIONS_PER_BLOCK=10
 MIN_TRANSACTIONS_PER_BLOCK=3
@@ -56,10 +56,16 @@ class Block:
                 print("Verification failed: unverified transaction in block")
                 return False
             # ensure each transaction != to any other transaction in the block
-            for j in (i+1, len(self.transactions)):
-                if self.transactions[i] == self.transactions[j]:
+            if i + 1 == len(self.transactions) - 1:
+                if self.transactions[i] == self.transactions[i+1]:
                     print("Verification failed: identical transactions in block")
                     return False
+            elif i != len(self.transactions) - 1:
+                for j in (i+1, len(self.transactions) - 1):
+                    print(i, ", ", (i+1, len(self.transactions) - 1))
+                    if self.transactions[i] == self.transactions[j]:
+                        print("Verification failed: identical transactions in block")
+                        return False
             # add each transaction to data for use in proof of work verification
             data.extend(self.transactions[i].hash())
 

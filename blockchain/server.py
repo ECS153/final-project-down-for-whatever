@@ -9,13 +9,13 @@ import bisect
 
 """
 TODO:
-ADD threads 
+ADD threads
 not sure how we handle the origin block ???
 do i need to check if transaction already exists????
 """
 
 blockchain = Chain() ## on start up create origin block with block static methond With @staticmethod of Block class
-transactions =[] #sorted oldest to youngest... oldest has a smaller time stamp 
+transactions =[] #sorted oldest to youngest... oldest has a smaller time stamp
 
 app = Flask(__name__)
 
@@ -35,12 +35,12 @@ def g_p_blockchain():
         new_bc = pickle.loads(new_bc)
 
         #does blockchain.verify go here?????
-        if (new_bc.length > blockchain.length): # my_list.filter { item -> item.timestamp < some_other_constant }
+        if (new_bc.length > blockchain.length and new_bc.verify()): # my_list.filter { item -> item.timestamp < some_other_constant }
             blockchain = new_bc
             #Now removing transactions that have a timestamp older than the youngest block in the chain
-            
+
             timestamp_of_last_block = blockchain.data[-1].timestamp
-            
+
 
             trans_temp = []
             for val in transactions:
@@ -60,11 +60,11 @@ def g_p_transactions():
     if request.method == 'GET':
 
         return pickle.dumps(transactions)
-    
+
     if request.method == 'POST':
         new_transaction = request.data
         new_transaction = pickle.loads(new_transaction)
-        
+
         time_stamp = blockchain.data[-1].timestamp
         transaction_is_valid = new_transaction.verify(time_stamp) #true or false
 
@@ -78,10 +78,10 @@ def g_p_transactions():
 
             return "success"
         else:
-            return "failed" 
+            return "failed"
 
 @app.route("/check_in", methods=["GET"])
-def check_in(): #gives length of current block chain and how many current transactions 
+def check_in(): #gives length of current block chain and how many current transactions
     envelope = Envelope(blockchain.length, len(transactions))
     return pickle.dumps(envelope)
 
