@@ -73,7 +73,7 @@ def g_p_transactions():
         if transaction_is_valid:
             #insert new_transaction into a sorted list
             #https://stackoverflow.com/questions/26840413/insert-a-custom-object-in-a-sorted-list
-            bisect.insort_right(transactions, new_transaction) #(IF somthing goes wrong)this suposed to use the def__gt__ in transaction.py and timestamped_message.py if
+            bisect.insort_right(transactions, new_transaction)
             #print for check
             for i in transactions:
                 print(str(i.author.n)[-10:] + " " + str(i.timestamped_msg.timestamp))
