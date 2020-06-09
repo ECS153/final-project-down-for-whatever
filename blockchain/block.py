@@ -1,4 +1,3 @@
-#from datetime import datetime  # for datetime representation of timestamp
 import time
 import hashlib                 # for SHA256 cryptographic hashing
 from transaction import Transaction
@@ -9,7 +8,7 @@ MIN_TRANSACTIONS_PER_BLOCK=3
 ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "0000"
 
 class Block:
-    def __init__(self, timestamp=time.time_ns(), blockHash=None, index=0, previousBlockHash=None, proof=100, transactions=[]):
+    def __init__(self, timestamp=time.time_ns(), blockHash=None, index=1, previousBlockHash=None, proof=None, transactions=[]):
 
         # initially when block is created, updates to latest transaction time
         self.timestamp = timestamp
@@ -17,7 +16,7 @@ class Block:
         self.transactions = transactions # the list of the block's transactions
         self.previousBlockHash = previousBlockHash # previous block's hash
         self.index = index # index of the block in the chain
-        self.proof = "proof" # proof of block (initially 100 for Genesis Block)
+        self.proof = proof # proof of block (initially 100 for Genesis Block)
 
         if blockHash == None: # if no hash is provided, it is auto-generated
             self.blockHash = self.hash()
@@ -102,7 +101,6 @@ class Block:
 
         guess_at_this_blocks_proof_number = random.random()
         if self.hash_proof(guess_at_this_blocks_proof_number, data_in_hash):
-            #print(guess_at_this_blocks_proof_number)
             return guess_at_this_blocks_proof_number
         return None
 
@@ -110,8 +108,5 @@ class Block:
         f = bytearray(data)
         f.extend(str(guess).encode())
         data_with_guess = f
-        #encoded_string = string.encode('utf-8')
-        #print("Total data to hash: " + str(data_with_guess))
         hash = hashlib.sha256(str(data_with_guess).encode()).hexdigest()
-        #print(hash)
         return hash.startswith(ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK)

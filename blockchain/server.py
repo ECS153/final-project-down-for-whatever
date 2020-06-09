@@ -22,7 +22,7 @@ blocks_mined = 0
 
 app = Flask(__name__)
 
-@app.route("/") ##get everything????
+@app.route("/")
 def home():
     return "Hello! this is the main page"
 
@@ -37,21 +37,18 @@ def g_p_blockchain():
         new_bc = request.data
         new_bc = pickle.loads(new_bc)
 
-        #does blockchain.verify go here?????
-        if (new_bc.length > blockchain.length and new_bc.verify()): # my_list.filter { item -> item.timestamp < some_other_constant }
+        if (new_bc.length > blockchain.length and new_bc.verify()):
             blockchain = new_bc
             #Now removing transactions that have a timestamp older than the youngest block in the chain
 
             timestamp_of_last_block = blockchain.data[-1].timestamp
-
-
             trans_temp = []
             for val in transactions:
                 if val.timestamped_msg.timestamp > timestamp_of_last_block:
                     trans_temp.append(val)
             transactions = trans_temp
             if (new_bc.length > 2): # we have already mined 1 block, so clients are up and running
-                global blocks_mined 
+                global blocks_mined
                 global total_time_spent_mining
                 blocks_mined += 1
                 time_spent_mining_this_block = new_bc.data[-1].timestamp - new_bc.data[-2].timestamp

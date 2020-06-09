@@ -21,8 +21,6 @@ ADDRESS = "http://127.0.0.1:5000/"
 def get_blockchain():
     r = requests.get(ADDRESS + "blockchain")
     bc = pickle.loads(r.content)
-    #print(r)
-    #print(type(r.status_code))
     return bc
 
 #returns list of transactions
@@ -64,7 +62,7 @@ def main():
      #on start up pull transaction and block
      client_running = True
      do = 1
-     max_loop = 200000 
+     max_loop = 200000
      sleep_time = 5
      print("Hello this is the miner starting up")
      print("i am going to get the blockchain and transactions from the server")
@@ -73,38 +71,33 @@ def main():
      transactions = get_transactions()
 
      while client_running:
-        
+
         while len(transactions) < block.MIN_TRANSACTIONS_PER_BLOCK:
             print(f"Waiting for more Xacts. Sleeping for {sleep_time} sec.")
             time.sleep(sleep_time)
             transactions = get_transactions()
-        
+
         proof_of_work_trans = transactions[:block.MAX_TRANSACTIONS_PER_BLOCK]
-        
-        #python does not have a dow hile loop I made my own
+
+        #python does not have a do while loop I made my own
         #this is the mining process
         while True:
-            #proof_of_work(self, prev_proof, transactions_to_be_mined)
             prev_proof = chain.data[-1].proof
             results = chain.data[-1].proof_of_work(prev_proof, proof_of_work_trans)
 
             if(results != None):
                 #generate block
-                #timestamp=datetime.now(), blockHash=None, index=0, previousBlockHash=None, proof=100, transactions=[]
                 new_block = Block() #figure out how to call client
-                #TODO add more init stuff
                 new_block.timestamp = proof_of_work_trans[-1].timestamped_msg.timestamp
                 new_block.transactions = proof_of_work_trans
-                #new_block.previousBlockHash = chain.data[-1].hash()
-                #new_block.index = chain.length + 1
-                
+
                 new_block.proof = results
-                #hash      
+                #hash
                 chain.add(new_block)
                 results = add_block(chain)
                 if(results == "success"):
                     print(f"I just successfully mined a block with id {str(new_block.hash())[-10:]}")
-                    do = max_loop + 1 #break do while loop 
+                    do = max_loop + 1 #break do while loop
                     print(f"now the number of my transactions is going to go down from {len(transactions)} to {check_in().transactions_count}")
                     transactions = get_transactions()
                 else:
@@ -112,14 +105,14 @@ def main():
                     print("i must now update my current blockchain and transactions")
                     do = max_loop + 1 #break do while loop and will go to check_in section to get the new chain and transactions
 
-                #check to see if push was succesful 
+                #check to see if push was succesful
                 break
 
             do = do + 1
             if (do > max_loop):
                 break
-        
-        #do a check in 
+
+        #do a check in
         print("doing a check in!")
         check = check_in()
         if check.blockchain_len > chain.length:

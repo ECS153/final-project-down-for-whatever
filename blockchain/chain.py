@@ -28,11 +28,6 @@ class Chain:
         blockToAdd.previousBlockHash = self.data[-1].hash()
 
         blockToAdd.index = self.length # the index will be the new length
-
-        # calculates the proof of the new block using PoW and the prev (last) block in the chain.
-        # Update either block or chain to take in list of transactions in order to add.
-        #blockToAdd.proof = self.proof_of_work(self.data[-1].proof, blockToAdd.transactions)
-
         blockToAdd.blockHash = blockToAdd.hash() # update hash of new block
         self.data.append(blockToAdd) # append the block to the blockchain
 
