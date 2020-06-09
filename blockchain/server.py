@@ -17,6 +17,9 @@ do i need to check if transaction already exists????
 blockchain = Chain() ## on start up create origin block with block static methond With @staticmethod of Block class
 transactions =[] #sorted oldest to youngest... oldest has a smaller time stamp
 
+total_time_spent_mining = 0
+blocks_mined = 0
+
 app = Flask(__name__)
 
 @app.route("/") ##get everything????
@@ -47,6 +50,14 @@ def g_p_blockchain():
                 if val.timestamped_msg.timestamp > timestamp_of_last_block:
                     trans_temp.append(val)
             transactions = trans_temp
+            if (new_bc.length > 2): # we have already mined 1 block, so clients are up and running
+                global blocks_mined 
+                global total_time_spent_mining
+                blocks_mined += 1
+                time_spent_mining_this_block = new_bc.data[-1].timestamp - new_bc.data[-2].timestamp
+                total_time_spent_mining += time_spent_mining_this_block
+                print(f"{blocks_mined}th block after the warm-up block was mined in {time_spent_mining_this_block/1e9} s. AVG={total_time_spent_mining / (blocks_mined*1e9)} s.")
+
 
             return "success"
 
