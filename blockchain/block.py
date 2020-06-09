@@ -5,7 +5,7 @@ import random
 
 MAX_TRANSACTIONS_PER_BLOCK=3
 MIN_TRANSACTIONS_PER_BLOCK=3
-ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "0000"
+ENOUGH_ZEROS_FOR_A_PROOF_OF_WORK = "00000"
 
 class Block:
     def __init__(self, timestamp=time.time_ns(), blockHash=None, index=1, previousBlockHash=None, proof=None, transactions=[]):
