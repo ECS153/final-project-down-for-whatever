@@ -40,3 +40,5 @@ A `Transaction` contains one `TimestampedMessage` which forms the content/"body"
 The network is composed of one `Server`, which stores the authoritative version of the `Chain`, and zero or more `Client`s mining `Transaction`s into `Block`s. `Client`s mine according to a Proof of Work algorithm.
 
 A single `Transaction` can be submitted to the `Server` by running the publish.py script. The `Server` then forwards the new `Transaction` to all clients.
+
+The Proof of Work algorithm requires the `proof` of the previous `Block`, a list of `Transactions`, and a random generated number to obtain the `proof` of the newly formed `Block`. This `proof` is utilized in the formation of new `Blocks` and when mining the `Chain`. 

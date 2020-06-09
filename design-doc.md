@@ -3,3 +3,5 @@
 [Dane's Design Doc](https://docs.google.com/document/d/137-3oc-g1-z3NCVHhDR7OIW2W_9xG_6QBmONnNjCmyo/edit?usp=sharing) - This design doc talks about Gossip protocol how ever after it was writen we were told to simplify our network so now it is a server that the miners comunicate with to push and pull information about the blockchain, new transactions, and blocks mined.
 
 [Connor's Design Doc](https://docs.google.com/document/d/1FNiCJugAZcXI5b8ll1FFh8uA7yDqow7JwcQiO6LhqM0/edit?usp=sharing) - Block and Chain classes which form the basis for our blockchain design. The chain stores a list of blocks, chronologically verified by their hash of the previous block, and verifiable by their proof of work variable.
+
+[Bill's Design Doc](https://docs.google.com/document/d/1LFp9k3klDnE-dCdK217oH7y_lbA8LGSi9-uZkiPJtY4/edit?usp=sharing) - Discusses the overview of the Proof of Work algorithm utilized in our blockchain. Generates random numbers until a number that when hashed together with the proof of a previous block and a list of transaction returns a hash with a specified amount of leading zeros.
