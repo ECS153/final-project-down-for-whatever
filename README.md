@@ -26,8 +26,12 @@ keep sleeping until more transactions come in
 If you want to reduce or add more time for when the client checks into the server go to the client.py file and change the max\_loop number
 
 If you want the miners to take longer or shorter time to mine a block add or shrink the amount of zeros in the block.py file the value
-you are changing is ENOUGH\_ZEROS\_FOR\_A\_PROOF\_OF\_WORK. with 4 zeros 1 miner is able to get a block with in seconds 5 zeros takes about
-30 to 50 seconds and so on
+you are changing is ENOUGH\_ZEROS\_FOR\_A\_PROOF\_OF\_WORK. with 4 zeros 1 miner is able to get a block with in seconds 5 zeros takes about 2 to 3 minutes for one miner.
+
+## Results 
+with 4 zeros 1 miner is able to mine a block under a 1 minute
+
+with 5 zeros 1 miner takes between 2 and 3 mintues to mine a block with 2 miners the time is cut in half on average
 
 ## Mapping Concepts to Code and General Structure
 
