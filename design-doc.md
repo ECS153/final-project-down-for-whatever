@@ -1,5 +1,5 @@
 [Ben's Design Doc](https://docs.google.com/document/d/1Ftg9jzN7DSOrtMMwSQ1MYNOK_SK0P-cp_i9vGQMnXpQ/edit?usp=sharing) - Timestamped transactions whose authorship can be quickly verified. A transaction's "author" is an RSA public key sent with the transaction. Each transaction is also bundled with an RSA signature created with the author's private key.
 
-[Dane's Design Doc](https://docs.google.com/document/d/137-3oc-g1-z3NCVHhDR7OIW2W_9xG_6QBmONnNjCmyo/edit?usp=sharing)
+[Dane's Design Doc](https://docs.google.com/document/d/137-3oc-g1-z3NCVHhDR7OIW2W_9xG_6QBmONnNjCmyo/edit?usp=sharing) - This design doc talks about Gossip protocol how ever after it was writen we were told to simplify our network so now it is a server that the miners comunicate with to push and pull information about the blockchain, new transactions, and blocks mined.
 
 [Connor's Design Doc](https://docs.google.com/document/d/1FNiCJugAZcXI5b8ll1FFh8uA7yDqow7JwcQiO6LhqM0/edit?usp=sharing) - Block and Chain classes which form the basis for our blockchain design. The chain stores a list of blocks, chronologically verified by their hash of the previous block, and verifiable by their proof of work variable.
