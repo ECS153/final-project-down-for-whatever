@@ -6,13 +6,6 @@ from transaction import Transaction
 from block import Block
 import block
 
-"""
-TODO
-MIN_BLOCK_SIZE = 3
-MAX_BLOCK_SIZE = 10
-Block.MIN_BLOCK_SIZE
-
-"""
 
 ADDRESS = "http://127.0.0.1:5000/"
 
@@ -130,11 +123,3 @@ def main():
 ###################################################################################################
 
 main()
-"""
-print(get_blockchain())
-print(get_transactions())
-check_in().e_print()
-
-print(add_block("first block"))
-print(get_blockchain())
-"""
