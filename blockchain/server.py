@@ -7,12 +7,6 @@ from chain import Chain
 from block import Block
 import bisect
 
-"""
-TODO:
-ADD threads
-not sure how we handle the origin block ???
-do i need to check if transaction already exists????
-"""
 
 blockchain = Chain() ## on start up create origin block with block static methond With @staticmethod of Block class
 transactions =[] #sorted oldest to youngest... oldest has a smaller time stamp
